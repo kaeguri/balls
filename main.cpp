@@ -64,7 +64,7 @@ public:
 
 //2 шар
 
-        QPen pen2;
+       /*QPen pen2;
         pen2.setColor(Qt:: yellow);
         pen2.setWidth(5);
         pnt.setPen(pen2);
@@ -79,9 +79,9 @@ public:
             b2_ydelta = 5;
 
         b2_y += b2_ydelta;
-        pnt.drawEllipse(b2_x, b2_y, 40,40);
+        pnt.drawEllipse(b2_x, b2_y, 40,40);*/
 
-        /*QPixmap q;
+        QPixmap q;
         q.load("C:/projects/balls/cat.png");
 
         if(b2_y + b2_ydelta > height() - 120)
@@ -89,7 +89,9 @@ public:
         else if (b2_y + b2_ydelta < wall_y + 10)
             b2_ydelta = 5;
 
-        pnt.drawPixmap(b2_x, b2_y, 64, 64, q);*/
+        b2_y += b2_ydelta;
+
+        pnt.drawPixmap(b2_x, b2_y, 64, 64, q);
 
 
 
