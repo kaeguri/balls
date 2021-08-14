@@ -3,6 +3,7 @@
 #include <QtGui/QPainter>
 #include <QTimer>
 #include <iostream>
+#include <QPixmap>
 
 class MyWidget : public QWidget
 {
@@ -18,6 +19,7 @@ class MyWidget : public QWidget
     int b2_x = 200;
     int b2_y = 200;
     int b2_ydelta = 10;
+    //int b2_xdelta = 10;
 
     int wall_y = 50;
 
@@ -36,7 +38,7 @@ public:
 
         //Создание поля, в котором будут двигаться объекты
         QPainter pnt(this);
-                    //х, у,  ширина окна,   высота окна
+                    //х,        у,      ширина окна,   высота окна
         pnt.drawRect(leftWallx, wall_y, width() - 200, height() - 100);
 
 //1 шар
@@ -58,8 +60,8 @@ public:
             b1_xdelta = 5;
 
         b1_x += b1_xdelta;
-
         pnt.drawEllipse(b1_x, b1_y, 40, 40);
+
 //2 шар
 
         QPen pen2;
@@ -71,14 +73,27 @@ public:
         brush2.setColor(Qt:: green);
         pnt.setBrush(brush2);
 
-        if(b2_y + b2_ydelta > height() - 100)
+        if (b2_y + b2_ydelta > height() - 100)
             b2_ydelta = -5;
         else if (b2_y + b2_ydelta < wall_y + 10)
             b2_ydelta = 5;
 
         b2_y += b2_ydelta;
-
         pnt.drawEllipse(b2_x, b2_y, 40,40);
+
+        /*QPixmap q;
+        q.load("C:/projects/balls/cat.png");
+
+        if(b2_y + b2_ydelta > height() - 120)
+            b2_ydelta = -5;
+        else if (b2_y + b2_ydelta < wall_y + 10)
+            b2_ydelta = 5;
+
+        pnt.drawPixmap(b2_x, b2_y, 64, 64, q);*/
+
+
+
+
     }
 
 public slots:
