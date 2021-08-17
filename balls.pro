@@ -7,5 +7,9 @@ TARGET = balls
 TEMPLATE = app
 CONFIG += debug c++11
 
-SOURCES = main.cpp
+SOURCES = main.cpp \
+    model.cpp
+
+HEADERS += \
+    model.h
 
