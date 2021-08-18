@@ -30,7 +30,7 @@ public:
     {
         initBalls();
         initWall();
-        m_timer.setInterval(200);
+        m_timer.setInterval(30);
         m_timer.start();
         connect(&m_timer, &QTimer::timeout, this, &MyWidget::onTimeout);
     }
