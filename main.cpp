@@ -30,7 +30,7 @@ public:
     {
         initBalls();
         initWall();
-        m_timer.setInterval(30);
+        m_timer.setInterval(50);
         m_timer.start();
         connect(&m_timer, &QTimer::timeout, this, &MyWidget::onTimeout);
     }
@@ -61,7 +61,18 @@ public:
         brush.setColor(Qt:: yellow);
         pnt.setBrush(brush);
 
-        for (i = 0; i < 5; ++i)
+        for (i = 0; i < 3; ++i)
+        {
+            pnt.drawEllipse(
+                        balls[i].x,
+                        balls[i].y,
+                        balls[i].w,
+                        balls[i].h);
+        }
+
+        brush.setColor(Qt:: blue);
+        pnt.setBrush(brush);
+        for (i = 3; i < 5; ++i)
         {
             pnt.drawEllipse(
                         balls[i].x,
