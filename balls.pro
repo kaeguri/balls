@@ -8,8 +8,10 @@ TEMPLATE = app
 CONFIG += debug c++11
 
 SOURCES = main.cpp \
-    model.cpp
+    model.cpp \
+    view.cpp
 
 HEADERS += \
-    model.h
+    model.h \
+    view.h
 
