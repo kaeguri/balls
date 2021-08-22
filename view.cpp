@@ -6,12 +6,12 @@ View::View()
 {
     m_startBut = new QPushButton(this);
     m_startBut->setText("Запуск");
-    m_startBut->move(10, 10);
+    m_startBut->move(480, 570);
     connect(m_startBut, &QPushButton::clicked, this, &View::onStart);
 
     m_stopBut = new QPushButton(this);
     m_stopBut->setText("Оcтанов");
-    m_stopBut->move(10, 40);
+    m_stopBut->move(400, 570);
     connect(m_stopBut, &QPushButton::clicked, this, &View::onStop);
 
     initBalls();
