@@ -1,21 +1,19 @@
 #pragma once
 
-#include <QtWidgets/QWidget>
-#include <QtWidgets/QPushButton>
+#include <QtWidgets/QFrame>
 #include <QtCore/QTimer>
 
-class View : public QWidget
+class View : public QFrame
 {
     Q_OBJECT
 public:
-    View();
+    View(QWidget* parent = nullptr);
     void paintEvent(QPaintEvent *event) override;
+public:
+    void startScene();
+    void stopScene();
 public slots:
     void onTimeout();
-    void onStart();
-    void onStop();
 private:
     QTimer m_timer;
-    QPushButton* m_startBut;
-    QPushButton* m_stopBut;
 };

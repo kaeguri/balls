@@ -2,18 +2,10 @@
 #include "model.h"
 #include <QtGui/QPainter>
 
-View::View()
+View::View(QWidget* parent)
+    : QFrame(parent)
 {
-    m_startBut = new QPushButton(this);
-    m_startBut->setText("Запуск");
-    m_startBut->move(480, 570);
-    connect(m_startBut, &QPushButton::clicked, this, &View::onStart);
-
-    m_stopBut = new QPushButton(this);
-    m_stopBut->setText("Оcтанов");
-    m_stopBut->move(400, 570);
-    connect(m_stopBut, &QPushButton::clicked, this, &View::onStop);
-
+    setFrameStyle(QFrame::StyledPanel);
     initBalls();
    // initWall();
     m_timer.setInterval(40);
@@ -21,8 +13,10 @@ View::View()
     connect(&m_timer, &QTimer::timeout, this, &View::onTimeout);
 }
 
-void View::paintEvent(QPaintEvent*)
+void View::paintEvent(QPaintEvent* e)
 {
+    QFrame::paintEvent(e);
+
     int i;
 
     QPainter pnt(this);
@@ -83,12 +77,12 @@ void View::onTimeout()
     update();
 }
 
-void View::onStart()
+void View::startScene()
 {
     m_timer.start();
 }
 
-void View::onStop()
+void View::stopScene()
 {
     m_timer.stop();
 }
