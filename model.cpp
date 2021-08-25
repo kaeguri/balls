@@ -2,7 +2,7 @@
 #include <cmath>
 
 struct Ball balls[NUMBALLS];
-struct Wall wall;
+//struct Wall wall;
 
 void initBalls(void)
 {
@@ -31,13 +31,13 @@ void initBalls(void)
     }
 }
 
-void initWall(void)
-{
-    wall.x1 = 50;
-    wall.y1 = 50;
-    wall.x2 = 500;
-    wall.y2 = 500;
-}
+//void initWall(void)
+//{
+//    wall.x1 = 50;
+//    wall.y1 = 50;
+//    wall.x2 = 500;
+//    wall.y2 = 500;
+//}
 
 void moveBalls(void)
 {

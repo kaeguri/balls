@@ -15,7 +15,7 @@ View::View()
     connect(m_stopBut, &QPushButton::clicked, this, &View::onStop);
 
     initBalls();
-    initWall();
+   // initWall();
     m_timer.setInterval(40);
     //m_timer.start();
     connect(&m_timer, &QTimer::timeout, this, &View::onTimeout);
@@ -27,13 +27,13 @@ void View::paintEvent(QPaintEvent*)
 
     QPainter pnt(this);
 
-    // Создание поля, в котором будут двигаться объекты
-    pnt.drawRect(
-                wall.x1, // leftWallx,      // x
-                wall.y1, // wall_y,         // y
-                wall.x2, // width() - 200,  // Ширина окна
-                wall.y2  // height() - 100  // Высота окна
-                );
+//    // Создание поля, в котором будут двигаться объекты
+//    pnt.drawRect(
+//                wall.x1, // leftWallx,      // x
+//                wall.y1, // wall_y,         // y
+//                wall.x2, // width() - 200,  // Ширина окна
+//                wall.y2  // height() - 100  // Высота окна
+//                );
 
     //Контур
     QPen pen;
@@ -66,6 +66,14 @@ void View::paintEvent(QPaintEvent*)
                     balls[i].w,
                     balls[i].h);
     }
+
+    QPen o (Qt:: red);
+    o.setWidth(10);
+    QBrush m (Qt::blue);
+    QBrush s (Qt:: black);
+    pnt.setPen(o);
+    pnt.setBrush(m);
+    pnt.drawEllipse(600, 200, 80, 80);
 }
 
 void View::onTimeout()
