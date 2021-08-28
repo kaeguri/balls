@@ -61,13 +61,6 @@ void View::paintEvent(QPaintEvent* e)
                     balls[i].h);
     }
 
-    QPen o (Qt:: red);
-    o.setWidth(10);
-    QBrush m (Qt::blue);
-    QBrush s (Qt:: black);
-    pnt.setPen(o);
-    pnt.setBrush(m);
-    pnt.drawEllipse(600, 200, 80, 80);
 }
 
 void View::onTimeout()

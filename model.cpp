@@ -20,12 +20,10 @@ void initBalls(void)
 
     for (i = 3; i < NUMBALLS; ++i)
     {
-        // balls[i].x = 60 + i * 50;
         balls[i].x = 480 + i * 100;
-        //balls[i].y = 479;
         balls[i].y = -140 + i * 100;
         balls[i].xdelta = - 2;
-        balls[i].ydelta = 2;
+        balls[i].ydelta = - 2;
         balls[i].w = 40;
         balls[i].h = 40;
     }
@@ -46,7 +44,7 @@ void moveBalls(void)
 
     for (i = 0; i < 3; ++i)
     {
-        if (balls[i].x > 490 || balls[i].x < 65)
+        if (balls[i].x > 1000 || balls[i].x < 10)
             balls[i].xdelta = - balls[i].xdelta;
 
         if (balls[i].y > 490 || balls[i].y < 65)
@@ -54,20 +52,25 @@ void moveBalls(void)
 
         for (j = 3; j < 5; ++j)
         {
-            int delta = abs(balls[j].x - balls[i].x);
-            int ydelta = abs(balls[j].y - balls[i].y);
-            if (balls[j].x > 490 || balls[j].x < 65)
-            {
+            int x_distance = abs(balls[j].x - balls[i].x);
+            int y_distance = abs(balls[j].y - balls[i].y);
+
+            if (balls[j].x > 1000 || balls[j].x < 5)
                 balls[j].xdelta = - balls[j].xdelta;
+
+            if (balls[i].y > 1000 || balls[i].y < 20)
+            {
+                balls[j].ydelta = - balls[j].ydelta;
             }
-            else if (delta < 25 && ydelta <  40)
+            else if (x_distance < 25 && y_distance <  40)
             {
                 balls[j].xdelta = - balls[j].xdelta;
                 balls[i].xdelta = - balls[i].xdelta;
             }
 
-            //balls[j].y -= balls[j].ydelta;
-            balls[j].x -= balls[j].xdelta;
+            balls[j].y += balls[j].ydelta;
+            balls[j].x += balls[j].xdelta;
+
             balls[i].x += balls[i].xdelta;
         }
     }
