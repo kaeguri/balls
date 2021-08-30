@@ -35,6 +35,8 @@ void View::paintEvent(QPaintEvent* e)
     pen.setWidth(5);
     pnt.setPen(pen);
 
+    pnt.setFont(QFont("Arial", 16));
+
     //Заливка
     QBrush brush(Qt::SolidPattern);
     //brush.setColor(QColor(255, 150, 150));
@@ -48,6 +50,7 @@ void View::paintEvent(QPaintEvent* e)
                     balls[i].y,
                     balls[i].w,
                     balls[i].h);
+        pnt.drawText(balls[i].x + 10, balls[i].y + balls[i].h, QString::number(i));
     }
 
     brush.setColor(Qt:: blue);
@@ -59,6 +62,7 @@ void View::paintEvent(QPaintEvent* e)
                     balls[i].y,
                     balls[i].w,
                     balls[i].h);
+        pnt.drawText(balls[i].x + 10, balls[i].y + balls[i].h, QString::number(i));
     }
 
 }

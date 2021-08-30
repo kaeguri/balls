@@ -2,7 +2,8 @@
 #include <cmath>
 
 struct Ball balls[NUMBALLS];
-//struct Wall wall;
+static int sceneWidth = 800;    // Ширина области моделирования
+static int sceneHeight = 800;   // Высота области моделирования
 
 void initBalls(void)
 {
@@ -12,66 +13,113 @@ void initBalls(void)
     {
         balls[i].x = 70 + i * 100;
         balls[i].y = 60 + i * 100;
-        balls[i].xdelta = 2;
-        balls[i].ydelta = 2;
+        balls[i].xdelta = 2 + i * 2;
+        balls[i].ydelta = 2 + i * 2;
         balls[i].w = 40;
         balls[i].h = 40;
     }
 
     for (i = 3; i < NUMBALLS; ++i)
     {
-        balls[i].x = 480 + i * 100;
-        balls[i].y = -140 + i * 100;
+        balls[i].x = 480 + (i - 3) * 100;
+        balls[i].y = 100 + (i - 3)* 100;
         balls[i].xdelta = - 2;
         balls[i].ydelta = - 2;
         balls[i].w = 40;
         balls[i].h = 40;
     }
+
+    // Постусловие:
+    // 1. Все мячики в пределах области моделирования
+    // 2. Нет пересекающихся мячиков
 }
 
-//void initWall(void)
-//{
-//    wall.x1 = 50;
-//    wall.y1 = 50;
-//    wall.x2 = 500;
-//    wall.y2 = 500;
-//}
+void setSceneArea(int width, int height)
+{
+    sceneWidth = width;
+    sceneHeight = height;
+}
+
+int getSceneWidth()
+{
+    return sceneWidth;
+}
+
+int getSceneHeight()
+{
+    return sceneHeight;
+}
+
+void swap(int* v1, int* v2)
+{
+    int t = *v1;
+    *v1 = *v2;
+    *v2 = t;
+}
 
 void moveBalls(void)
 {
     int j;
     int i;
+    int collisionx = 0;
+    int collisiony = 0;
 
-    for (i = 0; i < 3; ++i)
+    // Предусловие алгоритма:
+    // 1. Все мячики в пределах области моделирования
+    // 2. Нет пересекающихся мячиков
+
+    // Шаг 1. Изменение положения каждого мячика
+    for (i = 0; i < NUMBALLS; ++i)
     {
-        if (balls[i].x > 1000 || balls[i].x < 10)
-            balls[i].xdelta = - balls[i].xdelta;
+        balls[i].x += balls[i].xdelta;
+        balls[i].y += balls[i].ydelta;
+    }
 
-        if (balls[i].y > 490 || balls[i].y < 65)
-            balls[i].ydelta = - balls[i].ydelta;
-
-        for (j = 3; j < 5; ++j)
+    // Шаг 2. Проверка столкновения со стеной
+    for (i = 0; i < NUMBALLS; ++i)
+    {
+        // Шаг 2.1. Проверяем столкновение с правой стеной
+        if (balls[i].x + balls[i].w >= sceneWidth)
         {
-            int x_distance = abs(balls[j].x - balls[i].x);
-            int y_distance = abs(balls[j].y - balls[i].y);
+            balls[i].x -= balls[i].xdelta;
+            balls[i].xdelta = - balls[i].xdelta;
+        }
 
-            if (balls[j].x > 1000 || balls[j].x < 5)
-                balls[j].xdelta = - balls[j].xdelta;
+        // Шаг 2.2. Проверка столкнования с левой стеной
+        if (balls[i].x <= 0)
+        {
+            balls[i].x -= balls[i].xdelta;
+            balls[i].xdelta = - balls[i].xdelta;
+        }
 
-            if (balls[i].y > 1000 || balls[i].y < 20)
+        // Шаг 2.3. Проверяем столкновение с нижней стеной
+        if (balls[i].y + balls[i].h >= sceneHeight)
+        {
+            balls[i].y -= balls[i].ydelta;
+            balls[i].ydelta = - balls[i].ydelta;
+        }
+
+        // Шаг 2.4. Проверяем столкновение с верхней стеной
+        if (balls[i].y <= 0)
+        {
+            balls[i].y -= balls[i].ydelta;
+            balls[i].ydelta = - balls[i].ydelta;
+        }
+    }
+
+    // Шаг 3. Проверка попарного столкнования мячиков
+    for (i = 0; i < NUMBALLS; ++i)
+    {
+        for (j = i; j < NUMBALLS; ++j)
+        {
+            collisionx = (abs(balls[i].x - balls[j].x) <= (balls[i].w + balls[j].w) / 2) ? 1 : 0;
+            collisiony = (abs(balls[i].y - balls[j].y) <= (balls[i].h + balls[j].h) / 2) ? 1 : 0;
+
+            if (collisionx == 1 && collisiony == 1)
             {
-                balls[j].ydelta = - balls[j].ydelta;
+                swap(&(balls[i].xdelta), &(balls[j].xdelta));
+                swap(&(balls[i].ydelta), &(balls[j].ydelta));
             }
-            else if (x_distance < 25 && y_distance <  40)
-            {
-                balls[j].xdelta = - balls[j].xdelta;
-                balls[i].xdelta = - balls[i].xdelta;
-            }
-
-            balls[j].y += balls[j].ydelta;
-            balls[j].x += balls[j].xdelta;
-
-            balls[i].x += balls[i].xdelta;
         }
     }
 }

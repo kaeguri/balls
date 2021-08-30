@@ -16,16 +16,8 @@ struct Ball
 
 extern struct Ball balls[5];
 
-//struct Wall
-//{
-//    int x1;
-//    int y1;
-//    int x2;
-//    int y2;
-//};
-
-//extern struct Wall wall;
-
 extern void initBalls(void);
-//extern void initWall(void);
 extern void moveBalls(void);
+extern void setSceneArea(int width, int height);
+extern int getSceneWidth();
+extern int getSceneHeight();

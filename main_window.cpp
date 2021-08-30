@@ -1,4 +1,5 @@
 #include "main_window.h"
+#include "model.h"
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QVBoxLayout>
 
@@ -6,8 +7,9 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 {
     //setAttribute(Qt::WA_OpaquePaintEvent);
     m_view = new View(this);
-    //m_view->move(50, 50);
-    //m_view->resize(800, 800);
+    m_view->setFixedWidth(getSceneWidth());
+    m_view->setFixedHeight(getSceneHeight());
+    m_view->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     m_startBut = new QPushButton(this);
     m_startBut->setText("Запуск");
@@ -25,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     text->setText("Ось Х: ");
 
     QHBoxLayout* mainLay = new QHBoxLayout(this);
-    mainLay->addWidget(m_view);
+    mainLay->addWidget(m_view, 0, Qt::AlignTop | Qt::AlignLeft);
 
     number = new QLineEdit;
     number->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
