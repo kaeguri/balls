@@ -8,7 +8,7 @@ View::View(QWidget* parent)
     setFrameStyle(QFrame::StyledPanel);
     initBalls();
    // initWall();
-    m_timer.setInterval(40);
+    m_timer.setInterval(10);
     //m_timer.start();
     connect(&m_timer, &QTimer::timeout, this, &View::onTimeout);
 }
@@ -30,40 +30,32 @@ void View::paintEvent(QPaintEvent* e)
 //                );
 
     //Контур
-    QPen pen;
-    pen.setColor(Qt::green);
-    pen.setWidth(5);
-    pnt.setPen(pen);
-
-    pnt.setFont(QFont("Arial", 16));
-
-    //Заливка
-    QBrush brush(Qt::SolidPattern);
-    //brush.setColor(QColor(255, 150, 150));
-    brush.setColor(Qt:: yellow);
-    pnt.setBrush(brush);
-
-    for (i = 0; i < 3; ++i)
+     QPen pen;
+     QBrush brush(Qt::SolidPattern);
+    for (i = 0; i < NUMBALLS; ++i)
     {
+        pen.setColor(QColor(97, 37, 128));
+        brush.setColor(QColor(161, 61, 213));
+        pen.setWidth(3);
+        pnt.setFont(QFont("Arial", 16));
+
+        if (i % 2 == 0)
+        {
+            pen.setColor(QColor(132, 178, 45));
+            brush.setColor(QColor(182, 246, 62));
+        }
+
+        pnt.setBrush(brush);
+        pnt.setPen(pen);
+
         pnt.drawEllipse(
                     balls[i].x,
                     balls[i].y,
                     balls[i].w,
                     balls[i].h);
-        pnt.drawText(balls[i].x + 10, balls[i].y + balls[i].h, QString::number(i));
+       // pnt.drawText(balls[i].x + 10, balls[i].y + balls[i].h, QString::number(i));
     }
 
-    brush.setColor(Qt:: blue);
-    pnt.setBrush(brush);
-    for (i = 3; i < 5; ++i)
-    {
-        pnt.drawEllipse(
-                    balls[i].x,
-                    balls[i].y,
-                    balls[i].w,
-                    balls[i].h);
-        pnt.drawText(balls[i].x + 10, balls[i].y + balls[i].h, QString::number(i));
-    }
 
 }
 

@@ -24,14 +24,14 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     connect(m_stopBut, &QPushButton::clicked, this, &MainWindow::onStop);
 
     text = new QLabel(this);
-    text->setText("Ось Х: ");
+    text->setText("Количество шариков: ");
 
     QHBoxLayout* mainLay = new QHBoxLayout(this);
     mainLay->addWidget(m_view, 0, Qt::AlignTop | Qt::AlignLeft);
 
     number = new QLineEdit;
     number->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    number->setValidator(new QIntValidator (0, 100, this));
+    number->setValidator(new QIntValidator (0, 10, this));
 
     QVBoxLayout* buttonLay = new QVBoxLayout;
     QVBoxLayout* settingsLay = new QVBoxLayout;
