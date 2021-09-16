@@ -6,11 +6,16 @@ View::View(QWidget* parent)
     : QFrame(parent)
 {
     setFrameStyle(QFrame::StyledPanel);
-    initBalls();
+    initBalls(20);
    // initWall();
     m_timer.setInterval(10);
     //m_timer.start();
     connect(&m_timer, &QTimer::timeout, this, &View::onTimeout);
+}
+
+View::~View()
+{
+    destroyBalls();
 }
 
 void View::paintEvent(QPaintEvent* e)
@@ -32,7 +37,7 @@ void View::paintEvent(QPaintEvent* e)
     //Контур
      QPen pen;
      QBrush brush(Qt::SolidPattern);
-    for (i = 0; i < NUMBALLS; ++i)
+    for (i = 0; i < getNumBalls(); ++i)
     {
         pen.setColor(QColor(97, 37, 128));
         brush.setColor(QColor(161, 61, 213));

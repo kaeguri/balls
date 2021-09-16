@@ -1,13 +1,19 @@
 #include "model.h"
 #include <cmath>
+#include <stdio.h>
 
-struct Ball balls[NUMBALLS];
-static int sceneWidth = 800;    // Ширина области моделирования
-static int sceneHeight = 800;   // Высота области моделирования
+struct Ball* balls = NULL;
+int ballsCount = 0;
+static int sceneWidth = 1200;    // Ширина области моделирования
+static int sceneHeight = 900;   // Высота области моделирования
 
-void initBalls(void)
+void initBalls(int numBalls)
 {
     int i;
+
+    ballsCount = numBalls;
+
+    balls = (struct Ball*)malloc(numBalls * sizeof(struct Ball));
 
     for (i = 0; i < 3; ++i)
     {
@@ -19,7 +25,7 @@ void initBalls(void)
         balls[i].h = 40;
     }
 
-    for (i = 3; i < NUMBALLS; ++i)
+    for (i = 3; i < numBalls; ++i)
     {
         balls[i].x = 480 + (i - 3) * 100;
         balls[i].y = 100 + (i - 3)* 100;
@@ -32,6 +38,11 @@ void initBalls(void)
     // Постусловие:
     // 1. Все мячики в пределах области моделирования
     // 2. Нет пересекающихся мячиков
+}
+
+void destroyBalls(void)
+{
+    free(balls);
 }
 
 void setSceneArea(int width, int height)
@@ -69,14 +80,14 @@ void moveBalls(void)
     // 2. Нет пересекающихся мячиков
 
     // Шаг 1. Изменение положения каждого мячика
-    for (i = 0; i < NUMBALLS; ++i)
+    for (i = 0; i < ballsCount; ++i)
     {
         balls[i].x += balls[i].xdelta;
         balls[i].y += balls[i].ydelta;
     }
 
     // Шаг 2. Проверка столкновения со стеной
-    for (i = 0; i < NUMBALLS; ++i)
+    for (i = 0; i < ballsCount; ++i)
     {
         // Шаг 2.1. Проверяем столкновение с правой стеной
         if (balls[i].x + balls[i].w >= sceneWidth)
@@ -108,9 +119,9 @@ void moveBalls(void)
     }
 
     // Шаг 3. Проверка попарного столкнования мячиков
-    for (i = 0; i < NUMBALLS; ++i)
+    for (i = 0; i < ballsCount; ++i)
     {
-        for (j = i; j < NUMBALLS; ++j)
+        for (j = i; j < ballsCount; ++j)
         {
             collisionx = (abs(balls[i].x - balls[j].x) <= (balls[i].w + balls[j].w) / 2) ? 1 : 0;
             collisiony = (abs(balls[i].y - balls[j].y) <= (balls[i].h + balls[j].h) / 2) ? 1 : 0;
@@ -122,4 +133,35 @@ void moveBalls(void)
             }
         }
     }
+}
+
+int getNumBalls(void)
+{
+    return ballsCount;
+}
+
+void loadBallsFromFile(const char* filePath)
+{
+    FILE* fd = NULL;
+    char buf[1024];
+
+    // Открыть файл
+    if ((fd = fopen(filePath, "r")) == NULL)
+    {
+        printf("ERROR: Не можем открыть файл\n");
+        return;
+    }
+
+    // Прочитать содержимое файла
+    while (feof(fd) == 0)
+    {
+        if (fscanf(fd, "%s", buf) == EOF)
+            break;
+        printf("FILE: %s\n", buf);
+    }
+
+    fflush(stdout);
+
+    // Закрыть файл
+    fclose(fd);
 }
